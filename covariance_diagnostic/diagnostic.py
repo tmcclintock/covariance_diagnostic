@@ -17,6 +17,9 @@ class diagnostic(object):
         if not np.allclose(C, C.T, atol=1e-8):
             raise Exception("Covariance matrix is not symmetric.")
 
+        #Shape
+        self.shape = np.shape(C)
+        
         #Compute eigenvalues
         w, v = np.linalg.eig(C)
         self.eigenvalues = w
