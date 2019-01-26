@@ -6,7 +6,7 @@ def test_diagnostic():
     #Test it builds
     I = np.identity(3)
     d = cd.diagnostic(I)
-    npt.assert_equal(True, d.is_pos_def)
+    npt.assert_equal(True, d.is_pos_semidef)
     npt.assert_array_equal([3,3], d.shape)
     npt.assert_array_equal([1,1,1], d.eigenvalues)
     x = np.arange(3)
