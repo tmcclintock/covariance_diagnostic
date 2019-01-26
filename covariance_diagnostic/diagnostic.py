@@ -34,7 +34,7 @@ class diagnostic(object):
         #Compute degrees of freedom
         self.recompute_DOF()
 
-    def recompute_DOF(self, N_samples=10000):
+    def recompute_DOF(self, N_samples=100000):
         iC = np.linalg.inv(self.C)
         chi2s = np.zeros(N_samples)
         for i in range(N_samples):
@@ -43,8 +43,8 @@ class diagnostic(object):
             chi2s[i] = np.dot(x, np.dot(iC, x))
         from scipy import stats
         import matplotlib.pyplot as plt
-        x = np.linspace(0, 20, 100)
-        plt.hist(chi2s, density=True, bins=50)
+        x = np.linspace(0, 10, 100)
+        plt.hist(chi2s, density=True, bins=100)
         dof = len(iC)
         plt.plot(x, stats.chi2.pdf(x, dof))
         plt.axvline(dof, c="k", ls="--")
@@ -53,10 +53,11 @@ class diagnostic(object):
 
 if __name__=="__main__":
     #Test it builds
-    N = 5
+    N = 3
     I = np.identity(N)
-    for i in range(N-1):
-        I[i, i+1] = I[i+1, i] = 0.576
+    I[0,1] = I[1,0] = 0.999
+    #for i in range(N-1):
+    #    I[i, i+1] = I[i+1, i] = 0.576
     print I
     d = diagnostic(I)
     print(d)
